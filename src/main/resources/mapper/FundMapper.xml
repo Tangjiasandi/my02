@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.FundMapper">
+    <resultMap type="com.lwh.my02.entity.Fund" id="Fund">
+        <result property="fundCode" column="fund_code" jdbcType="VARCHAR"/>
+        <result property="fundShortSpell" column="fund_short_spell" jdbcType="VARCHAR"/>
+        <result property="fundName" column="fund_name" jdbcType="VARCHAR"/>
+        <result property="fundType" column="fund_type" jdbcType="VARCHAR"/>
+        <result property="fundLongSpell" column="fund_long_spell" jdbcType="VARCHAR"/>
+        <result property="fundManager" column="fund_manager" jdbcType="VARCHAR"/>
+        <result property="fundSetupDate" column="fund_setup_date" jdbcType="VARCHAR"/>
+        <result property="fundScale" column="fund_scale" jdbcType="VARCHAR"/>
+        <result property="fundCorporation" column="fund_corporation" jdbcType="VARCHAR"/>
+        <result property="fundRiskLevel" column="fund_risk_level" jdbcType="VARCHAR"/>
+        <result property="fundFiveLevel" column="fund_five_level" jdbcType="VARCHAR"/>
+        <result property="fundManagerCode" column="fund_manager_code" jdbcType="VARCHAR"/>
+        <result property="fundCompanyCode" column="fund_company_code" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fund_code, fund_short_spell, fund_name, fund_type, fund_long_spell, fund_manager, fund_setup_date, fund_scale, fund_corporation, fund_risk_level, fund_five_level, fund_manager_code, fund_company_code    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="Fund">
+        select
+        <include refid="Base_Column_List"/>
+        from fund
+        where fund_code = #{fundCode}
+    </select>
+    <!--新增-->
+    <insert id="addFund">
+        insert into fund
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="fundShortSpell != null and fundShortSpell != ''">
+                fund_short_spell,
+            </if>
+            <if test="fundName != null and fundName != ''">
+                fund_name,
+            </if>
+            <if test="fundType != null and fundType != ''">
+                fund_type,
+            </if>
+            <if test="fundLongSpell != null and fundLongSpell != ''">
+                fund_long_spell,
+            </if>
+            <if test="fundManager != null and fundManager != ''">
+                fund_manager,
+            </if>
+            <if test="fundSetupDate != null and fundSetupDate != ''">
+                fund_setup_date,
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                fund_scale,
+            </if>
+            <if test="fundCorporation != null and fundCorporation != ''">
+                fund_corporation,
+            </if>
+            <if test="fundRiskLevel != null and fundRiskLevel != ''">
+                fund_risk_level,
+            </if>
+            <if test="fundFiveLevel != null and fundFiveLevel != ''">
+                fund_five_level,
+            </if>
+            <if test="fundManagerCode != null and fundManagerCode != ''">
+                fund_manager_code,
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                fund_company_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fundShortSpell != null and fundShortSpell != ''">
+                #{fundShortSpell,jdbcType=VARCHAR},
+            </if>
+            <if test="fundName != null and fundName != ''">
+                #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundType != null and fundType != ''">
+                #{fundType,jdbcType=VARCHAR},
+            </if>
+            <if test="fundLongSpell != null and fundLongSpell != ''">
+                #{fundLongSpell,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManager != null and fundManager != ''">
+                #{fundManager,jdbcType=VARCHAR},
+            </if>
+            <if test="fundSetupDate != null and fundSetupDate != ''">
+                #{fundSetupDate,jdbcType=VARCHAR},
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                #{fundScale,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCorporation != null and fundCorporation != ''">
+                #{fundCorporation,jdbcType=VARCHAR},
+            </if>
+            <if test="fundRiskLevel != null and fundRiskLevel != ''">
+                #{fundRiskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundFiveLevel != null and fundFiveLevel != ''">
+                #{fundFiveLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerCode != null and fundManagerCode != ''">
+                #{fundManagerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                #{fundCompanyCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量新增-->
+    <insert id="addFunds">
+        insert into fund (fund_code, fund_short_spell, fund_name, fund_type, fund_long_spell, fund_manager,
+        fund_setup_date, fund_scale, fund_corporation, fund_risk_level, fund_five_level, fund_manager_code,
+        fund_company_code)
+        values
+        <foreach collection="funds" item="fund" separator=",">
+            (#{fund.fundCode,jdbcType=VARCHAR}, #{fund.fundShortSpell,jdbcType=VARCHAR},
+            #{fund.fundName,jdbcType=VARCHAR}, #{fund.fundType,jdbcType=VARCHAR},
+            #{fund.fundLongSpell,jdbcType=VARCHAR}, #{fund.fundManager,jdbcType=VARCHAR},
+            #{fund.fundSetupDate,jdbcType=VARCHAR}, #{fund.fundScale,jdbcType=VARCHAR},
+            #{fund.fundCorporation,jdbcType=VARCHAR}, #{fund.fundRiskLevel,jdbcType=VARCHAR},
+            #{fund.fundFiveLevel,jdbcType=VARCHAR}, #{fund.fundManagerCode,jdbcType=VARCHAR},
+            #{fund.fundCompanyCode,jdbcType=VARCHAR}, )
+        </foreach>
+
+    </insert>
+    <!--编辑-->
+    <update id="editFund">
+        update fund
+        <set>
+            <if test="fundShortSpell != null and fundShortSpell != ''">
+                fund_short_spell = #{fundShortSpell,jdbcType=VARCHAR},
+            </if>
+            <if test="fundName != null and fundName != ''">
+                fund_name = #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundType != null and fundType != ''">
+                fund_type = #{fundType,jdbcType=VARCHAR},
+            </if>
+            <if test="fundLongSpell != null and fundLongSpell != ''">
+                fund_long_spell = #{fundLongSpell,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManager != null and fundManager != ''">
+                fund_manager = #{fundManager,jdbcType=VARCHAR},
+            </if>
+            <if test="fundSetupDate != null and fundSetupDate != ''">
+                fund_setup_date = #{fundSetupDate,jdbcType=VARCHAR},
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                fund_scale = #{fundScale,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCorporation != null and fundCorporation != ''">
+                fund_corporation = #{fundCorporation,jdbcType=VARCHAR},
+            </if>
+            <if test="fundRiskLevel != null and fundRiskLevel != ''">
+                fund_risk_level = #{fundRiskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundFiveLevel != null and fundFiveLevel != ''">
+                fund_five_level = #{fundFiveLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerCode != null and fundManagerCode != ''">
+                fund_manager_code = #{fundManagerCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                fund_company_code = #{fundCompanyCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

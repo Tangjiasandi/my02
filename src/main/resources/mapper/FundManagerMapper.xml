@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.FundManagerMapper">
+    <resultMap type="com.lwh.my02.entity.FundManager" id="FundManager">
+        <result property="fundManagerCode" column="fund_manager_code" jdbcType="VARCHAR"/>
+        <result property="fundManagerName" column="fund_manager_name" jdbcType="VARCHAR"/>
+        <result property="fundCompanyCode" column="fund_company_code" jdbcType="VARCHAR"/>
+        <result property="fundCompanyName" column="fund_company_name" jdbcType="VARCHAR"/>
+        <result property="currentFundCodes" column="current_fund_codes" jdbcType="VARCHAR"/>
+        <result property="currentFundNames" column="current_fund_names" jdbcType="VARCHAR"/>
+        <result property="bestRateReturn" column="best_rate_return" jdbcType="VARCHAR"/>
+        <result property="workDays" column="work_days" jdbcType="VARCHAR"/>
+        <result property="fundScale" column="fund_scale" jdbcType="VARCHAR"/>
+        <result property="fundManagerDesc" column="fund_manager_desc" jdbcType="VARCHAR"/>
+        <result property="fundManagerPhotoLink" column="fund_manager_photo_link" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fund_manager_code, fund_manager_name, fund_company_code, fund_company_name, current_fund_codes, current_fund_names, best_rate_return, work_days, fund_scale, fund_manager_desc, fund_manager_photo_link    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="FundManager">
+        select
+        <include refid="Base_Column_List"/>
+        from fund_manager
+        where fund_manager_code = #{fundManagerCode}
+    </select>
+    <!--新增-->
+    <insert id="addFundManager">
+        insert into fund_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="fundManagerName != null and fundManagerName != ''">
+                fund_manager_name,
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                fund_company_code,
+            </if>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                fund_company_name,
+            </if>
+            <if test="currentFundCodes != null and currentFundCodes != ''">
+                current_fund_codes,
+            </if>
+            <if test="currentFundNames != null and currentFundNames != ''">
+                current_fund_names,
+            </if>
+            <if test="bestRateReturn != null and bestRateReturn != ''">
+                best_rate_return,
+            </if>
+            <if test="workDays != null and workDays != ''">
+                work_days,
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                fund_scale,
+            </if>
+            <if test="fundManagerDesc != null and fundManagerDesc != ''">
+                fund_manager_desc,
+            </if>
+            <if test="fundManagerPhotoLink != null and fundManagerPhotoLink != ''">
+                fund_manager_photo_link,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerName != null and fundManagerName != ''">
+                #{fundManagerName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                #{fundCompanyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                #{fundCompanyName,jdbcType=VARCHAR},
+            </if>
+            <if test="currentFundCodes != null and currentFundCodes != ''">
+                #{currentFundCodes,jdbcType=VARCHAR},
+            </if>
+            <if test="currentFundNames != null and currentFundNames != ''">
+                #{currentFundNames,jdbcType=VARCHAR},
+            </if>
+            <if test="bestRateReturn != null and bestRateReturn != ''">
+                #{bestRateReturn,jdbcType=VARCHAR},
+            </if>
+            <if test="workDays != null and workDays != ''">
+                #{workDays,jdbcType=VARCHAR},
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                #{fundScale,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerDesc != null and fundManagerDesc != ''">
+                #{fundManagerDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerPhotoLink != null and fundManagerPhotoLink != ''">
+                #{fundManagerPhotoLink,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量新增-->
+    <insert id="addFundManagers">
+        insert into fund_manager (fund_manager_code, fund_manager_name, fund_company_code, fund_company_name,
+        current_fund_codes, current_fund_names, best_rate_return, work_days, fund_scale, fund_manager_desc,
+        fund_manager_photo_link)
+        values
+        <foreach collection="fundManagers" item="fundManager" separator=",">
+            (#{fundManager.fundManagerCode,jdbcType=VARCHAR}, #{fundManager.fundManagerName,jdbcType=VARCHAR},
+            #{fundManager.fundCompanyCode,jdbcType=VARCHAR}, #{fundManager.fundCompanyName,jdbcType=VARCHAR},
+            #{fundManager.currentFundCodes,jdbcType=VARCHAR}, #{fundManager.currentFundNames,jdbcType=VARCHAR},
+            #{fundManager.bestRateReturn,jdbcType=VARCHAR}, #{fundManager.workDays,jdbcType=VARCHAR},
+            #{fundManager.fundScale,jdbcType=VARCHAR}, #{fundManager.fundManagerDesc,jdbcType=VARCHAR},
+            #{fundManager.fundManagerPhotoLink,jdbcType=VARCHAR}, )
+        </foreach>
+    </insert>
+    <!--编辑-->
+    <update id="editFundManager">
+        update fund_manager
+        <set>
+            <if test="fundManagerName != null and fundManagerName != ''">
+                fund_manager_name = #{fundManagerName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyCode != null and fundCompanyCode != ''">
+                fund_company_code = #{fundCompanyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                fund_company_name = #{fundCompanyName,jdbcType=VARCHAR},
+            </if>
+            <if test="currentFundCodes != null and currentFundCodes != ''">
+                current_fund_codes = #{currentFundCodes,jdbcType=VARCHAR},
+            </if>
+            <if test="currentFundNames != null and currentFundNames != ''">
+                current_fund_names = #{currentFundNames,jdbcType=VARCHAR},
+            </if>
+            <if test="bestRateReturn != null and bestRateReturn != ''">
+                best_rate_return = #{bestRateReturn,jdbcType=VARCHAR},
+            </if>
+            <if test="workDays != null and workDays != ''">
+                work_days = #{workDays,jdbcType=VARCHAR},
+            </if>
+            <if test="fundScale != null and fundScale != ''">
+                fund_scale = #{fundScale,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerDesc != null and fundManagerDesc != ''">
+                fund_manager_desc = #{fundManagerDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="fundManagerPhotoLink != null and fundManagerPhotoLink != ''">
+                fund_manager_photo_link = #{fundManagerPhotoLink,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

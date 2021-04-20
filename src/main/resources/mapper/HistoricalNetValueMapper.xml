@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.HistoricalNetValueMapper">
+    <resultMap type="com.lwh.my02.entity.HistoricalNetValue" id="HistoricalNetValue">
+        <result property="fundCode" column="fund_code" jdbcType="VARCHAR"/>
+        <result property="fundDate" column="fund_date" jdbcType="VARCHAR"/>
+        <result property="netAssetValue" column="net_asset_value" jdbcType="VARCHAR"/>
+        <result property="cumulativeNetValue" column="cumulative_net_value" jdbcType="VARCHAR"/>
+        <result property="dayOfGrowth" column="day_of_growth" jdbcType="VARCHAR"/>
+        <result property="subscriptionStatus" column="subscription_status" jdbcType="VARCHAR"/>
+        <result property="redemptionStatus" column="redemption_status" jdbcType="VARCHAR"/>
+        <result property="dividendDistribution" column="dividend_distribution" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fund_code, fund_date, net_asset_value, cumulative_net_value, day_of_growth, subscription_status, redemption_status, dividend_distribution    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="HistoricalNetValue">
+        select
+        <include refid="Base_Column_List"/>
+        from historical_net_value
+        where fund_code = #{fundCode}
+    </select>
+    <!--新增-->
+    <insert id="addHistoricalNetValue">
+        insert into historical_net_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value,
+            </if>
+            <if test="cumulativeNetValue != null and cumulativeNetValue != ''">
+                cumulative_net_value,
+            </if>
+            <if test="dayOfGrowth != null and dayOfGrowth != ''">
+                day_of_growth,
+            </if>
+            <if test="subscriptionStatus != null and subscriptionStatus != ''">
+                subscription_status,
+            </if>
+            <if test="redemptionStatus != null and redemptionStatus != ''">
+                redemption_status,
+            </if>
+            <if test="dividendDistribution != null and dividendDistribution != ''">
+                dividend_distribution,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                #{netAssetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="cumulativeNetValue != null and cumulativeNetValue != ''">
+                #{cumulativeNetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="dayOfGrowth != null and dayOfGrowth != ''">
+                #{dayOfGrowth,jdbcType=VARCHAR},
+            </if>
+            <if test="subscriptionStatus != null and subscriptionStatus != ''">
+                #{subscriptionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="redemptionStatus != null and redemptionStatus != ''">
+                #{redemptionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="dividendDistribution != null and dividendDistribution != ''">
+                #{dividendDistribution,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量新增-->
+    <insert id="addHistoricalNetValues">
+        insert into historical_net_value (fund_code, fund_date, net_asset_value, cumulative_net_value, day_of_growth,
+        subscription_status, redemption_status, dividend_distribution)
+        values
+        <foreach collection="historicalNetValues" item="historicalNetValue" separator=",">
+            (#{historicalNetValue.fundCode,jdbcType=VARCHAR}, #{historicalNetValue.fundDate,jdbcType=VARCHAR},
+            #{historicalNetValue.netAssetValue,jdbcType=VARCHAR},
+            #{historicalNetValue.cumulativeNetValue,jdbcType=VARCHAR},
+            #{historicalNetValue.dayOfGrowth,jdbcType=VARCHAR},
+            #{historicalNetValue.subscriptionStatus,jdbcType=VARCHAR},
+            #{historicalNetValue.redemptionStatus,jdbcType=VARCHAR},
+            #{historicalNetValue.dividendDistribution,jdbcType=VARCHAR}, )
+        </foreach>
+
+    </insert>
+    <!--编辑-->
+    <update id="editHistoricalNetValue">
+        update historical_net_value
+        <set>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value = #{netAssetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="cumulativeNetValue != null and cumulativeNetValue != ''">
+                cumulative_net_value = #{cumulativeNetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="dayOfGrowth != null and dayOfGrowth != ''">
+                day_of_growth = #{dayOfGrowth,jdbcType=VARCHAR},
+            </if>
+            <if test="subscriptionStatus != null and subscriptionStatus != ''">
+                subscription_status = #{subscriptionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="redemptionStatus != null and redemptionStatus != ''">
+                redemption_status = #{redemptionStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="dividendDistribution != null and dividendDistribution != ''">
+                dividend_distribution = #{dividendDistribution,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

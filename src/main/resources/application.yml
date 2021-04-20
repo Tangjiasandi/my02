@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.104.26.30:3306/fund?useUnicode=true&characterEncoding=utf8
+    username: fundUser
+    password: fundUser
+  mvc:
+    static-path-pattern: /**
+  mail:
+    username: 1002361618@QQ.com
+  resources:
+    static-locations: classpath:/static/
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  servlet:
+    multipart:
+      max-request-size: 500MB
+      max-file-size: 500MB
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.lwh.*.entity.*
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+logging:
+  config: classpath:logback.xml
+server:
+  port: 8080

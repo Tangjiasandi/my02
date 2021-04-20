@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.FundCompanyMapper">
+    <resultMap type="com.lwh.my02.entity.FundCompany" id="FundCompany">
+        <result property="fundCompanyCode" column="fund_company_code" jdbcType="VARCHAR"/>
+        <result property="fundCompanyName" column="fund_company_name" jdbcType="VARCHAR"/>
+        <result property="companySetupDate" column="company_setup_date" jdbcType="VARCHAR"/>
+        <result property="companyScale" column="company_scale" jdbcType="VARCHAR"/>
+        <result property="companyLevel" column="company_level" jdbcType="VARCHAR"/>
+        <result property="companyMaster" column="company_master" jdbcType="VARCHAR"/>
+        <result property="companyNameInShort" column="company_name_in_short" jdbcType="VARCHAR"/>
+        <result property="totalFundNum" column="total_fund_num" jdbcType="VARCHAR"/>
+        <result property="dataTime" column="data_time" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fund_company_code, fund_company_name, company_setup_date, company_scale, company_level, company_master, company_name_in_short, total_fund_num, data_time    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="FundCompany">
+        select
+        <include refid="Base_Column_List"/>
+        from fund_company
+        where fund_company_code = #{fundCompanyCode}
+    </select>
+    <!--新增-->
+    <insert id="addFundCompany">
+        insert into fund_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                fund_company_name,
+            </if>
+            <if test="companySetupDate != null and companySetupDate != ''">
+                company_setup_date,
+            </if>
+            <if test="companyScale != null and companyScale != ''">
+                company_scale,
+            </if>
+            <if test="companyLevel != null and companyLevel != ''">
+                company_level,
+            </if>
+            <if test="companyMaster != null and companyMaster != ''">
+                company_master,
+            </if>
+            <if test="companyNameInShort != null and companyNameInShort != ''">
+                company_name_in_short,
+            </if>
+            <if test="totalFundNum != null and totalFundNum != ''">
+                total_fund_num,
+            </if>
+            <if test="dataTime != null and dataTime != ''">
+                data_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                #{fundCompanyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companySetupDate != null and companySetupDate != ''">
+                #{companySetupDate,jdbcType=VARCHAR},
+            </if>
+            <if test="companyScale != null and companyScale != ''">
+                #{companyScale,jdbcType=VARCHAR},
+            </if>
+            <if test="companyLevel != null and companyLevel != ''">
+                #{companyLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="companyMaster != null and companyMaster != ''">
+                #{companyMaster,jdbcType=VARCHAR},
+            </if>
+            <if test="companyNameInShort != null and companyNameInShort != ''">
+                #{companyNameInShort,jdbcType=VARCHAR},
+            </if>
+            <if test="totalFundNum != null and totalFundNum != ''">
+                #{totalFundNum,jdbcType=VARCHAR},
+            </if>
+            <if test="dataTime != null and dataTime != ''">
+                #{dataTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--批量新增-->
+    <insert id="addFundCompanys">
+        insert into fund_company (fund_company_code, fund_company_name, company_setup_date, company_scale,
+        company_level, company_master, company_name_in_short, total_fund_num, data_time)
+        values
+        <foreach collection="fundCompanys" item="fundCompany" separator=",">
+            (#{fundCompany.fundCompanyCode,jdbcType=VARCHAR}, #{fundCompany.fundCompanyName,jdbcType=VARCHAR},
+            #{fundCompany.companySetupDate,jdbcType=VARCHAR}, #{fundCompany.companyScale,jdbcType=VARCHAR},
+            #{fundCompany.companyLevel,jdbcType=VARCHAR}, #{fundCompany.companyMaster,jdbcType=VARCHAR},
+            #{fundCompany.companyNameInShort,jdbcType=VARCHAR}, #{fundCompany.totalFundNum,jdbcType=VARCHAR},
+            #{fundCompany.dataTime,jdbcType=VARCHAR}, )
+        </foreach>
+
+    </insert>
+    <!--编辑-->
+    <update id="editFundCompany">
+        update fund_company
+        <set>
+            <if test="fundCompanyName != null and fundCompanyName != ''">
+                fund_company_name = #{fundCompanyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companySetupDate != null and companySetupDate != ''">
+                company_setup_date = #{companySetupDate,jdbcType=VARCHAR},
+            </if>
+            <if test="companyScale != null and companyScale != ''">
+                company_scale = #{companyScale,jdbcType=VARCHAR},
+            </if>
+            <if test="companyLevel != null and companyLevel != ''">
+                company_level = #{companyLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="companyMaster != null and companyMaster != ''">
+                company_master = #{companyMaster,jdbcType=VARCHAR},
+            </if>
+            <if test="companyNameInShort != null and companyNameInShort != ''">
+                company_name_in_short = #{companyNameInShort,jdbcType=VARCHAR},
+            </if>
+            <if test="totalFundNum != null and totalFundNum != ''">
+                total_fund_num = #{totalFundNum,jdbcType=VARCHAR},
+            </if>
+            <if test="dataTime != null and dataTime != ''">
+                data_time = #{dataTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.FundRateReturnMapper">
+    <resultMap type="com.lwh.my02.entity.FundRateReturn" id="FundRateReturn">
+        <result property="fundCode" column="fund_code" jdbcType="VARCHAR"/>
+        <result property="fundDate" column="fund_date" jdbcType="VARCHAR"/>
+        <result property="netAssetValue" column="net_asset_value" jdbcType="VARCHAR"/>
+        <result property="lastOneDayRate" column="last_one_day_rate" jdbcType="OTHER"/>
+        <result property="lastOneMonthRate" column="last_one_month_rate" jdbcType="OTHER"/>
+        <result property="lastThreeMonthRate" column="last_three_month_rate" jdbcType="OTHER"/>
+        <result property="lastSixMonthRate" column="last_six_month_rate" jdbcType="OTHER"/>
+        <result property="lastOneYearRate" column="last_one_year_rate" jdbcType="OTHER"/>
+        <result property="lastThreeYearRate" column="last_three_year_rate" jdbcType="OTHER"/>
+        <result property="setupDateRate" column="setup_date_rate" jdbcType="OTHER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    fund_code, fund_date, net_asset_value, last_one_day_rate, last_one_month_rate, last_three_month_rate, last_six_month_rate, last_one_year_rate, last_three_year_rate, setup_date_rate    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="FundRateReturn">
+        select
+        <include refid="Base_Column_List"/>
+        from fund_rate_return
+        where fund_code = #{fundCode}
+    </select>
+    <!--新增-->
+    <insert id="addFundRateReturn">
+        insert into fund_rate_return
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value,
+            </if>
+            <if test="lastOneDayRate != null">
+                last_one_day_rate,
+            </if>
+            <if test="lastOneMonthRate != null">
+                last_one_month_rate,
+            </if>
+            <if test="lastThreeMonthRate != null">
+                last_three_month_rate,
+            </if>
+            <if test="lastSixMonthRate != null">
+                last_six_month_rate,
+            </if>
+            <if test="lastOneYearRate != null">
+                last_one_year_rate,
+            </if>
+            <if test="lastThreeYearRate != null">
+                last_three_year_rate,
+            </if>
+            <if test="setupDateRate != null">
+                setup_date_rate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                #{netAssetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="lastOneDayRate != null">
+                #{lastOneDayRate,jdbcType=OTHER},
+            </if>
+            <if test="lastOneMonthRate != null">
+                #{lastOneMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastThreeMonthRate != null">
+                #{lastThreeMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastSixMonthRate != null">
+                #{lastSixMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastOneYearRate != null">
+                #{lastOneYearRate,jdbcType=OTHER},
+            </if>
+            <if test="lastThreeYearRate != null">
+                #{lastThreeYearRate,jdbcType=OTHER},
+            </if>
+            <if test="setupDateRate != null">
+                #{setupDateRate,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <!--批量新增-->
+    <insert id="addFundRateReturns">
+        insert into fund_rate_return (fund_code, fund_date, net_asset_value, last_one_day_rate, last_one_month_rate,
+        last_three_month_rate, last_six_month_rate, last_one_year_rate, last_three_year_rate, setup_date_rate)
+        values
+        <foreach collection="fundRateReturns" item="fundRateReturn" separator=",">
+            (#{fundRateReturn.fundCode,jdbcType=VARCHAR}, #{fundRateReturn.fundDate,jdbcType=VARCHAR},
+            #{fundRateReturn.netAssetValue,jdbcType=VARCHAR}, #{fundRateReturn.lastOneDayRate,jdbcType=OTHER},
+            #{fundRateReturn.lastOneMonthRate,jdbcType=OTHER}, #{fundRateReturn.lastThreeMonthRate,jdbcType=OTHER},
+            #{fundRateReturn.lastSixMonthRate,jdbcType=OTHER}, #{fundRateReturn.lastOneYearRate,jdbcType=OTHER},
+            #{fundRateReturn.lastThreeYearRate,jdbcType=OTHER}, #{fundRateReturn.setupDateRate,jdbcType=OTHER}, )
+        </foreach>
+
+    </insert>
+    <!--编辑-->
+    <update id="editFundRateReturn">
+        update fund_rate_return
+        <set>
+            <if test="netAssetValue != null and netAssetValue != ''">
+                net_asset_value = #{netAssetValue,jdbcType=VARCHAR},
+            </if>
+            <if test="lastOneDayRate != null">
+                last_one_day_rate = #{lastOneDayRate,jdbcType=OTHER},
+            </if>
+            <if test="lastOneMonthRate != null">
+                last_one_month_rate = #{lastOneMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastThreeMonthRate != null">
+                last_three_month_rate = #{lastThreeMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastSixMonthRate != null">
+                last_six_month_rate = #{lastSixMonthRate,jdbcType=OTHER},
+            </if>
+            <if test="lastOneYearRate != null">
+                last_one_year_rate = #{lastOneYearRate,jdbcType=OTHER},
+            </if>
+            <if test="lastThreeYearRate != null">
+                last_three_year_rate = #{lastThreeYearRate,jdbcType=OTHER},
+            </if>
+            <if test="setupDateRate != null">
+                setup_date_rate = #{setupDateRate,jdbcType=OTHER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

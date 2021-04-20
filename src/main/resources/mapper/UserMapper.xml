@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwh.my02.mapper.UserMapper">
+    <resultMap type="com.lwh.my02.entity.User" id="User">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
+        <result property="userTelephone" column="user_telephone" jdbcType="VARCHAR"/>
+        <result property="userRegisterTime" column="user_register_time" jdbcType="VARCHAR"/>
+        <result property="userState" column="user_state" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, user_name, user_password, user_telephone, user_register_time, user_state    
+    </sql>
+    <!--根据ID查询数据-->
+    <select id="getById" resultMap="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId}
+    </select>
+    <!--新增-->
+    <insert id="addUser">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">
+                user_id,
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name,
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password,
+            </if>
+            <if test="userTelephone != null and userTelephone != ''">
+                user_telephone,
+            </if>
+            <if test="userRegisterTime != null and userRegisterTime != ''">
+                user_register_time,
+            </if>
+            <if test="userState != null and userState != ''">
+                user_state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">
+                #{user_id,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null and userName != ''">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userTelephone != null and userTelephone != ''">
+                #{userTelephone,jdbcType=VARCHAR},
+            </if>
+            <if test="userRegisterTime != null and userRegisterTime != ''">
+                #{userRegisterTime,jdbcType=VARCHAR},
+            </if>
+            <if test="userState != null and userState != ''">
+                #{userState,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>
